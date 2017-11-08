@@ -29,6 +29,5 @@ databaseFunction <- function(arg1, arg2, arg3, arg4) {
  dbWriteTable(connection, name = "Facebook", value = posts, override = TRUE) 
 }
 
-auth <- authentification()
 pageResult <- searchFunction()
 databaseFunction("Facebook", 'Me', '***PASSWORD***', 'localhost')
