@@ -15,7 +15,7 @@ authentification <- function(){
 
 searchFunction <- function(){
  # function searches Facebook
- # returns id of matching page
+ # returns full page information
  searchPages <- searchPages(searchPhrase, token = my_oauth, pageRequest)
 }
 
