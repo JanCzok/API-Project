@@ -7,11 +7,8 @@ library("RMySQL")
 searchPhrase <- readline("Type search phrase: ")
 pageRequest <- as.numeric(readline("Requested amount of pages: "))
 
-authentification <- function(){
- # my_oauth is auth file created during API registration
- load("my_oauth")
- me <- getUsers("me", token = my_oauth)
-}
+# my_oauth is auth file created during API registration
+load("my_oauth")
 
 searchFunction <- function(){
  # function searches Facebook
@@ -21,16 +18,17 @@ searchFunction <- function(){
 
 # searches for posts in each page and adds to list
 posts = list()
-for (i in 1:length(searchPages))
+for (i in 1:length(pageResult))
 {
-posts = append(posts, getPage(searchPages$id[i], token = my_oauth, n = pageRequest, reactions = TRUE, verbose = TRUE))
+posts = append(posts, getPage(pageResult$id[i], token = my_oauth, n = pageRequest, reactions = TRUE, verbose = TRUE))
 }
 
 databaseFunction <- function(arg1, arg2, arg3, arg4) {
  # saves table on database
  connection = dbConnect(RMySQL::MySQL(), dbname = arg1, username = arg2, password = arg3, host = arg4)
+ dbWriteTable(connection, name = "Facebook", value = posts, override = TRUE) 
 }
 
-authentification()
-searchFunction()
+auth <- authentification()
+pageResult <- searchFunction()
 databaseFunction("Facebook", 'Me', '***PASSWORD***', 'localhost')
