@@ -21,7 +21,7 @@ searchFunction <- function(){
 
 # searches for posts in each page and adds to list
 posts = list()
-for (i in 1:pageRequest)
+for (i in 1:length(searchPages))
 {
 posts = append(posts, getPage(searchPages$id[i], token = my_oauth, n = pageRequest, reactions = TRUE, verbose = TRUE))
 }
